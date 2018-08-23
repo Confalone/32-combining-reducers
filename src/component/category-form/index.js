@@ -1,18 +1,29 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 
-
-export default class CategoryForm extends Component {
+class CategoryForm extends Component {
+  
   constructor(props) {
     super(props);
-    this.state = {
+    this.defaultState = {
       name: '',
       budget: '',
-    }
+    };
+
+    const initialState = this.props.category || this.defaultState;
+
+    this.state =  {...initialState};
+    
+    this.onSubmit = this.onSubmit.bind(this);
     this.handleCategoryChange = this.handleCategoryChange.bind(this);
     this.handleBudgetChange = this.handleBudgetChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
   }
-
+  
+  onSubmit(event) {
+    event.preventDefault();
+    this.props.onComplete(this.state);
+    this.setState({ ...this.defaultState });
+  }
+ 
   handleCategoryChange(event) {
     this.setState({name: event.target.value});
   }
@@ -20,34 +31,28 @@ export default class CategoryForm extends Component {
   handleBudgetChange(event) {
     this.setState({budget: event.target.value});
   }
-  
-  handleSubmit(event) {
-    event.preventDefault();
-    this.props.onComplete(this.state);
-    this.setState({
-      name: '',
-      budget: '',
-    })
-  }
-  
-  render() { 
-    console.log('STATE', this.state);
+
+  render() {
     return (
-      <form onSubmit={this.handleSubmit}>
+      <form onSubmit={this.onSubmit}>
         <input 
+          name="name" 
+          placeholder="name" 
           type='text'
-          placeholder='Category'
-          onChange={this.handleCategoryChange}
+          value={this.state.name} 
+          onChange={this.handleCategoryChange} 
         />
-        <input
+        <input 
+          budget="budget" 
+          placeholder="budget" 
           type='number'
-          placeholder='Budget'
-          onChange={this.handleBudgetChange}
+          value={this.state.budget} 
+          onChange={this.handleBudgetChange} 
         />
-        <button type='submit'>Create your Category</button>
-      
+        <button>{this.props.buttonText}</button>
       </form>
-      
-    )
+    );
   }
 }
+
+export default CategoryForm;
