@@ -1,4 +1,4 @@
 import {createStore} from 'redux';
-import Reducer from '../reducer/categories';
+import combinedReducer from '../reducer/categories';
 
-export default createStore(Reducer, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__());
+export default createStore(combinedReducer, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__());

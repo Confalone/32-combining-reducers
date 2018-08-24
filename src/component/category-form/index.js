@@ -43,7 +43,7 @@ class CategoryForm extends Component {
           onChange={this.handleCategoryChange} 
         />
         <input 
-          budget="budget" 
+          name="budget" 
           placeholder="budget" 
           type='number'
           value={this.state.budget} 
