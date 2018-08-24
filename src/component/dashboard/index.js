@@ -1,45 +1,29 @@
-import React, { Component, Fragment } from 'react';
-import {connect} from 'react-redux';
+import React, { Fragment } from 'react';
+import { connect } from 'react-redux';
+import { createCategory, updateCategory, destroyCategory } from '../../action/category';
 import CategoryForm from '../category-form';
 import CategoryItem from '../category-item';
-import * as category from '../../action/category';
 
-class Dashboard extends Component {
-  render() {
-    let {
-      categories,
-      categoryCreate,
-      categoryUpdate,
-      categoryDestroy,
-    } = this.props;
 
-    return (
-      <div>
-        <CategoryForm onComplete={categoryCreate}/>
-        {/* {
-          categories.map((category, index) => 
-        <div key={index}>
-          <CategoryItem category={category}/>
-        </div>
-        )
-        } */}
-      </div>
-    );
-  }
-}
-
-let mapStateToProps = (state) => {
-  return{
-    categories: state.categories,
-  };
-};
-let mapDispatchToProps = (dispatch) => {
-  return {
-    categoryCreate: (data) => dispatch(category.createCategory(data)),
-    categoryUpdate: (data) => dispatch(category.updateCategory(data)),
-    categoryDestroy: (data) => dispatch(category.destroyCategory(data)),
-  };
+const Dashboard = props => {
+  return (
+    <Fragment>
+      <CategoryForm onComplete={props.createCategory} buttonText="Create" />
+      {props.categories.map(category => (
+        <li key={category.id}>
+          <CategoryItem category={category} onComplete={props.updateCategory} onDelete={props.destroyCategory} />
+        </li>
+      ))}
+    </Fragment>
+  );
 };
 
+const mapStateToProps = (state) => ({ categories: state });
+
+const mapDispatchToProps = (dispatch) => ({
+  createCategory: category => dispatch(createCategory(category)),
+  updateCategory: category => dispatch(updateCategory(category)),
+  destroyCategory: category => dispatch(destroyCategory(category)),
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(Dashboard);
