@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import CategoryForm from '../category-form';
+import ExpenseForm from '../expense-form';
 
 import './category-item.scss';
 
@@ -39,6 +40,7 @@ export default class CategoryItem extends Component {
         <span id='budget-item' onClick={this.showEditForm}>${this.props.category.budget}</span>
         <button onClick={this.deleteCategory}>x</button>
         {this.state.editing && <CategoryForm onComplete={this.updateCategory} buttonText="update" category={this.props.category} />}
+        <ExpenseForm/>
       </div>
     );
   }
